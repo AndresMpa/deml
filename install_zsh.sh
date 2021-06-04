@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo apt-get update
-sudo apt-get install curl
+sudo apt-get install curl wget
 
 sh -c '$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)'
 
@@ -9,10 +9,8 @@ sh -c '$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 # Resalto de comandos
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
-
 # Sugenrecias automaticas
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-
 
 # Completado inteligente de rutas
 git clone --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git
@@ -94,8 +92,8 @@ newgrp docker
 sudo systemctl enable docker.service
 sudo systemctl enable containerd.service
 
-echo "Listo, si todo salio bien ahora debes tener un ambiante completo con el servicio de docker puede interesar este link: https://docs.docker.com/engine/install/linux-postinstall/#configuring-remote-access-with-systemd-unit-file"
-		
+echo "Listo, si todo salio bien ahora debes tener un ambiante completo con el servicio de docker. Puedes modificar los plugins de zsh en esta ruta: 'code ~/.zshrc' \nPuede interesar estos links:"
+
 # Probando la instalación de docerk
 sudo docker run hello-world
 
@@ -117,4 +115,5 @@ https://github.com/zsh-users/zsh-completions
 Docker
 https://www.linux.com/topic/desktop/how-install-and-use-docker-linux/
 https://docs.docker.com/engine/install/ubuntu/
+https://docs.docker.com/engine/install/linux-postinstall/#configuring-remote-access-with-systemd-unit-file
 "
