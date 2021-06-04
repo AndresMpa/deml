@@ -11,7 +11,6 @@ chsh -s `which zsh`
 # Instalar powerlevel10k
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
-
 # Resalto de comandos
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
@@ -51,7 +50,7 @@ if [ medio_de_instalacion == 1 ];
 	then
 		sudo apt-get remove docker docker-engine docker.io containerd runc
 		sudo apt-get update
-		sudo apt-get install apt-transport-https ca-certificates curl gnupg lsb-release docker-ce docker-ce-cli containerd.io
+		sudo apt-get install apt-transport-https ca-certificates gnupg lsb-release docker-ce docker-ce-cli containerd.io docker docker-engine docker.io containerd runc
 		curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 		echo \
 			"deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
