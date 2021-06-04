@@ -8,6 +8,10 @@ rm -rf /home/andresmpa/.oh-my-zsh
 wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh
 chsh -s `which zsh`
 
+# Instalar powerlevel10k
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+
+
 # Resalto de comandos
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
@@ -59,7 +63,7 @@ if [ medio_de_instalacion == 1 ];
 		sudo apt-get install docker-ce=$distro docker-ce-cli=$distro containerd.io
 else
 
-	if [ $distro == 'focal' ];
+	if [ $distro == "focal" ];
 	then
 		wget https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-scan-plugin_0.8.0~ubuntu-focal_amd64.deb
 		wget https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-ce_20.10.7~3-0~ubuntu-focal_amd64.deb
@@ -69,7 +73,7 @@ else
 		wget https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-ce-cli_19.03.15~3-0~ubuntu-focal_amd64.deb
 		wget https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/containerd.io_1.4.6-1_amd64.deb
 	fi
-	if [ $distro == 'groovy' ];
+	if [ $distro == "groovy" ];
 	then
 		wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/docker-scan-plugin_0.8.0~ubuntu-groovy_amd64.deb
 		wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/docker-ce_20.10.7~3-0~ubuntu-groovy_amd64.deb
@@ -77,7 +81,7 @@ else
 		wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/docker-ce-cli_20.10.7~3-0~ubuntu-groovy_amd64.deb
 		wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/containerd.io_1.4.6-1_amd64.deb 
 	fi
-	if [ $distro == 'bionic' ]; 
+	if [ $distro == "bionic" ]; 
 	then
 		wget https://download.docker.com/linux/ubuntu/dists/bionic/pool/stable/amd64/containerd.io_1.4.6-1_amd64.deb
 		wget https://download.docker.com/linux/ubuntu/dists/bionic/pool/stable/amd64/docker-ce-cli_20.10.7~3-0~ubuntu-bionic_amd64.deb
@@ -102,7 +106,7 @@ echo "Listo, si todo salio bien ahora debes tener un ambiante completo con el se
 # Probando la instalación de docerk
 sudo docker run hello-world
 
-help = "
+help_after_install="
 ZSH
 
 # Syntax
