@@ -1,4 +1,4 @@
-# desl
+# DESL
 
 The Developer Environments Setter for Linux
 (DESL) is a feature developet for developers
