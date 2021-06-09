@@ -1,5 +1,5 @@
-# desl
+# DESL
 
-The Developer Environmets Setter for Linux
+The Developer Environments Setter for Linux
 (DESL) is a feature developet for developers
 to create Linux terminal develop environmets
