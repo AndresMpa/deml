@@ -100,7 +100,10 @@ newgrp docker
 sudo systemctl enable docker.service
 sudo systemctl enable containerd.service
 
-echo "Listo, si todo salio bien ahora debes tener un ambiante completo con el servicio de docker. Puedes modificar los plugins de zsh en esta ruta: 'code ~/.zshrc' \nPuede interesar estos links:"
+echo "
+Listo, si todo salio bien ahora debes tener un ambiante completo con el servicio de docker. Puedes modificar los plugins de zsh en esta ruta: 'code ~/.zshrc'
+
+Puede interesar estos links:"
 
 # Probando la instalación de docerk
 sudo docker run hello-world
