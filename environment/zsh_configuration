@@ -136,3 +136,27 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias v=nvim
+alias instalador="
+Listo, si todo salio bien ahora debes tener un ambiante completo con el servicio de docker. Puedes modificar los plugins de zsh en esta ruta: 'code ~/.zshrc'
+
+Puede interesar estos links:
+
+ZSH
+
+# Syntax
+https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md
+
+# Autosuggestion
+https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh
+
+Autocomplete
+https://github.com/marlonrichert/zsh-autocomplete
+
+Completions
+https://github.com/zsh-users/zsh-completions
+
+Docker
+https://www.linux.com/topic/desktop/how-install-and-use-docker-linux/
+https://docs.docker.com/engine/install/ubuntu/
+https://docs.docker.com/engine/install/linux-postinstall/#configuring-remote-access-with-systemd-unit-file
+"

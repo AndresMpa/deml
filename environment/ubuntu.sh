@@ -52,7 +52,7 @@ fi
 
 clear
 
-echo "¿Como quieres instalar docker?[y/n]"
+echo -n "¿Como quieres instalar docker?[y/n]"
 read docker
 
 if [[ "$docker" == "y" ]];
@@ -65,17 +65,17 @@ fi
 if [[ "$medio_de_instalacion" == "1" ]];
 	then
 		sudo apt-get remove docker docker-engine docker.io containerd runc
-		sudo apt-get update
-		sudo apt-get install apt-transport-https ca-certificates gnupg lsb-release docker-ce docker-ce-cli containerd.io docker docker-engine docker.io containerd runc
-		curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-		echo \
-			"deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-			$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+		sudo apt-get update && sudo apt update
+		sudo apt install apt-transport-https ca-certificates software-properties-common
+		curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+		sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 		
-		apt-cache madison docker-ce
-		
-		distro="lsb_release -cs"
-		sudo apt-get install docker-ce=$distro docker-ce-cli=$distro containerd.io
+		sudo apt update
+		apt-cache policy docker-ce
+		sudo apt install docker-ce
+
+		sudo usermod -aG docker ${USER}
+		su - ${USER}
 else
 	if [ $distro -eq "focal" ];
 		then
@@ -115,31 +115,3 @@ newgrp docker
 sudo systemctl enable docker.service
 sudo systemctl enable containerd.service
 
-echo "
-Listo, si todo salio bien ahora debes tener un ambiante completo con el servicio de docker. Puedes modificar los plugins de zsh en esta ruta: 'code ~/.zshrc'
-
-Puede interesar estos links:"
-
-# Probando la instalación de docerk
-sudo docker run hello-world
-
-help_after_install="
-ZSH
-
-# Syntax
-https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md
-
-# Autosuggestion
-https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh
-
-Autocomplete
-https://github.com/marlonrichert/zsh-autocomplete
-
-Completions
-https://github.com/zsh-users/zsh-completions
-
-Docker
-https://www.linux.com/topic/desktop/how-install-and-use-docker-linux/
-https://docs.docker.com/engine/install/ubuntu/
-https://docs.docker.com/engine/install/linux-postinstall/#configuring-remote-access-with-systemd-unit-file
-"
