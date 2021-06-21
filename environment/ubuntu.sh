@@ -1,52 +1,68 @@
 #!/bin/bash
 
+echo "Actualizando el sistema" 
 sudo apt-get update
-sudo apt-get zsh install curl wget
+echo "Instaladores"
+sudo apt-get install curl wget
+echo "Manejadores de paquetes"
+sudo apt-get install nodejs pip npm
+echo "Editor para soporte"
+sudo apt-get install neovim
+echo "Editor de texto"
+sudo snap install --classic code
 
-# Instalar oh-my-zsh
-rm -rf /home/andresmpa/.oh-my-zsh
-wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh
-chsh -s `which zsh`
+echo -n "Desea cambiar de shell (Oh-my-zsh)[y/n]: "
+read res
 
-# Instalar powerlevel10k
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-
-# Resalto de comandos
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-
-# Sugenrecias automaticas
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-
-# Completado inteligente de rutas
-git clone --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git
-cd zsh-autocomplete
-source zsh-autocomplete.plugin.zsh
-cd ..
-mv zsh-autocomplete ~/.oh-my-zsh/custom/plugins
-sudo apt-get install zsh-autosuggestions -y
-
-# Mejor ls
-wget mirrors.kernel.org/ubuntu/pool/universe/r/rust-exa/exa_0.9.0-4_amd64.deb
-sudo dpkg -i exa_0.9.0-4_amd64.deb
-rm -rf exa_0.9.0-4_amd64.deb
-git clone https://github.com/DarrinTisdale/zsh-aliases-exa
-mv zsh-aliases-exa .oh-my-zsh/custom/plugins
-
-cat zsh_configuration > ~/.zshrc
+if [[ "$res" == "y" ]];
+then
+	# Instalar oh-my-zsh
+	sudo apt-get install zsh fzf
+	rm -rf /home/$USER/.oh-my-zsh
+	wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh
+	chsh -s `which zsh`
+	
+	# Instalar powerlevel10k
+	git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+	
+	# Resalto de comandos
+	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+	
+	# Sugenrecias automaticas
+	git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+	
+	# Completado inteligente de rutas
+	git clone --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git
+	cd zsh-autocomplete
+	source zsh-autocomplete.plugin.zsh
+	cd ..
+	mv zsh-autocomplete ~/.oh-my-zsh/custom/plugins
+	sudo apt-get install zsh-autosuggestions -y
+	
+	# Mejor ls
+	wget mirrors.kernel.org/ubuntu/pool/universe/r/rust-exa/exa_0.9.0-4_amd64.deb
+	sudo dpkg -i exa_0.9.0-4_amd64.deb
+	rm -rf exa_0.9.0-4_amd64.deb
+	git clone https://github.com/DarrinTisdale/zsh-aliases-exa ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-aliases-exa
+	
+	cat zsh_configuration > ~/.zshrc
+fi
 
 # Docker
 
 clear
 
-medio_de_instalacion=2
+echo "¿Como quieres instalar docker?[y/n]"
+read docker
 
-echo "¿Como quieres instalar docker?:"
-echo "1) Mediante respositorio"
-echo "2) Mediante paquete"
+if [[ "$docker" == "y" ]];
+	then
+		echo "[1] Mediante repositorio de docker (Recomendado)"
+		echo "[2] Mediante deb packages "
+		read medio_de_instalacion
+fi
 
-read medio_de_instalacion
-
-if [ medio_de_instalacion == 1 ];
+if [[ "$medio_de_instalacion" == "1" ]];
 	then
 		sudo apt-get remove docker docker-engine docker.io containerd runc
 		sudo apt-get update
@@ -61,32 +77,31 @@ if [ medio_de_instalacion == 1 ];
 		distro="lsb_release -cs"
 		sudo apt-get install docker-ce=$distro docker-ce-cli=$distro containerd.io
 else
-
-	if [ $distro == "focal" ];
-	then
-		wget https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-scan-plugin_0.8.0~ubuntu-focal_amd64.deb
-		wget https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-ce_20.10.7~3-0~ubuntu-focal_amd64.deb
-		wget https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-ce_19.03.15~3-0~ubuntu-focal_amd64.deb
-		wget https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-ce-rootless-extras_20.10.7~3-0~ubuntu-focal_amd64.deb
-		wget https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-ce-cli_20.10.7~3-0~ubuntu-focal_amd64.deb
-		wget https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-ce-cli_19.03.15~3-0~ubuntu-focal_amd64.deb
-		wget https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/containerd.io_1.4.6-1_amd64.deb
+	if [ $distro -eq "focal" ];
+		then
+			wget https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-scan-plugin_0.8.0~ubuntu-focal_amd64.deb
+			wget https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-ce_20.10.7~3-0~ubuntu-focal_amd64.deb
+			wget https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-ce_19.03.15~3-0~ubuntu-focal_amd64.deb
+			wget https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-ce-rootless-extras_20.10.7~3-0~ubuntu-focal_amd64.deb
+			wget https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-ce-cli_20.10.7~3-0~ubuntu-focal_amd64.deb
+			wget https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-ce-cli_19.03.15~3-0~ubuntu-focal_amd64.deb
+			wget https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/containerd.io_1.4.6-1_amd64.deb
 	fi
-	if [ $distro == "groovy" ];
-	then
+	if [ $distro -eq "groovy" ];
+		then
 		wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/docker-scan-plugin_0.8.0~ubuntu-groovy_amd64.deb
 		wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/docker-ce_20.10.7~3-0~ubuntu-groovy_amd64.deb
 		wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/docker-ce-rootless-extras_20.10.7~3-0~ubuntu-groovy_amd64.deb
 		wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/docker-ce-cli_20.10.7~3-0~ubuntu-groovy_amd64.deb
 		wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/containerd.io_1.4.6-1_amd64.deb 
 	fi
-	if [ $distro == "bionic" ]; 
-	then
-		wget https://download.docker.com/linux/ubuntu/dists/bionic/pool/stable/amd64/containerd.io_1.4.6-1_amd64.deb
-		wget https://download.docker.com/linux/ubuntu/dists/bionic/pool/stable/amd64/docker-ce-cli_20.10.7~3-0~ubuntu-bionic_amd64.deb
-		wget https://download.docker.com/linux/ubuntu/dists/bionic/pool/stable/amd64/docker-ce-rootless-extras_20.10.7~3-0~ubuntu-bionic_amd64.deb
-		wget https://download.docker.com/linux/ubuntu/dists/bionic/pool/stable/amd64/docker-ce_20.10.7~3-0~ubuntu-bionic_amd64.deb
-		wget https://download.docker.com/linux/ubuntu/dists/bionic/pool/stable/amd64/docker-scan-plugin_0.8.0~ubuntu-bionic_amd64.deb
+	if [ $distro -eq "bionic" ]; 
+		then
+			wget https://download.docker.com/linux/ubuntu/dists/bionic/pool/stable/amd64/containerd.io_1.4.6-1_amd64.deb
+			wget https://download.docker.com/linux/ubuntu/dists/bionic/pool/stable/amd64/docker-ce-cli_20.10.7~3-0~ubuntu-bionic_amd64.deb
+			wget https://download.docker.com/linux/ubuntu/dists/bionic/pool/stable/amd64/docker-ce-rootless-extras_20.10.7~3-0~ubuntu-bionic_amd64.deb
+			wget https://download.docker.com/linux/ubuntu/dists/bionic/pool/stable/amd64/docker-ce_20.10.7~3-0~ubuntu-bionic_amd64.deb
+			wget https://download.docker.com/linux/ubuntu/dists/bionic/pool/stable/amd64/docker-scan-plugin_0.8.0~ubuntu-bionic_amd64.deb
 	fi
 	sudo dpkg -i *.deb
 fi

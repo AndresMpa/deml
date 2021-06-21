@@ -17,10 +17,15 @@ Choose an environment
 
 Choose an environment: 
 "
-environment=1
-read $environment
 
-if [ $environment == 1 ];
+read -p 'Environmet: ' environment
+
+echo "$environment"
+
+if [[ "$environment" == "1" ]];
 then
+	echo "Ubuntu (ES)"
 	exec ./environment/ubuntu.sh
+else
+	echo "Error"
 fi
