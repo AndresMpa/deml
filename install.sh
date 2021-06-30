@@ -13,7 +13,9 @@ This is a helper to set environments for unix users (This may work also for MAC)
 
 Choose an environment
 
-1) Ubuntu (ES):
+1) Ubuntu (ES)
+2) Ubuntu (EN)
+3) Arch Linux
 
 Choose an environment: 
 "
@@ -26,6 +28,12 @@ if [[ "$environment" == "1" ]];
 then
 	echo "Ubuntu (ES)"
 	exec ./environment/ubuntu.sh
+elif [[ "$environment" == "2" ]];
+then
+	echo "Ubuntu (EN)"
+elif [[ "$environment" == "3" ]];
+then
+	echo "Arch Linux"
 else
 	echo "Error"
 fi

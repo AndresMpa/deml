@@ -10,27 +10,34 @@ echo "Editor para soporte"
 sudo apt-get install neovim
 echo "Editor de texto"
 sudo snap install --classic code
+echo "Complementos"
+sudo apt-get install openssh-server
+ 
+echo -n "¿Usas Laptop? [y/n]: "
+read latop
+if [[ "$laptop" == "y" ]];
+then
+	sudo apt install touchegg
+fi
 
 echo -n "Desea cambiar de shell (Oh-my-zsh)[y/n]: "
 read res
 
 if [[ "$res" == "y" ]];
 then
+	# Instalando fuentes
+	wget -P ~/.local/share/fonts https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
+	wget -P ~/.local/share/fonts https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
+	wget -P ~/.local/share/fonts https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
+	wget -P ~/.local/share/fonts https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
+	fc-cache -f -v
+
 	# Instalar oh-my-zsh
 	sudo apt-get install zsh fzf
 	rm -rf /home/$USER/.oh-my-zsh
 	wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh
 	chsh -s `which zsh`
 
-	# Instalando fuentes
-	wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
-	wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
-	wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
-	wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
-	mv *.ttf ~/.local/share/fonts
-	fc-cache -f -v
-
-	
 	# Instalar powerlevel10k
 	git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 	
@@ -124,3 +131,10 @@ newgrp docker
 sudo systemctl enable docker.service
 sudo systemctl enable containerd.service
 
+echo -n "¿Deseas instalar MySQL? [y/n]: "
+read mysql
+
+if [[ "$mysql" == "y" ]];
+then
+	sudo apt-get install mysql
+fi
