@@ -85,6 +85,9 @@ plugins=(
 	git
 	npm
 	colored-man-pages
+	zsh-syntax-highlighting
+	zsh-autosuggestions
+	zsh-autocomplete
 )
 # This is really cool but it make zsh work a slow so I will use it
 # whne I get a better Pc
