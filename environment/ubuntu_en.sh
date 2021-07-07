@@ -1,17 +1,44 @@
 echo "Updating system" 
-sudo apt-get update
+sudo apt-get update -y
 echo "Installers"
-sudo apt-get install curl wget
+sudo apt-get install curl wget -y
 echo "Package managers"
-sudo apt-get install nodejs pip npm
+sudo apt-get install nodejs pip npm -y
 echo "Support editor"
-sudo apt-get install neovim
+sudo apt-get install neovim -y
 echo "Text editor"
 sudo snap install --classic code
 
+clear
+ 
+echo -n "Do you use a laptop? [y/n]: "
+read latop
+if [[ "$laptop" == "y" ]];
+then
+	sudo apt install touchegg -y
+fi
+
+clear
+
+echo -n "Don you want to use stack (L)inux (A)pache (M)ySQL (P)HP? [y/n]: "
+read latop
+if [[ "$laptop" == "y" ]];
+then
+	sudo apt install apache2 mysql-server -y
+	sudo mysql_secure_installation
+	sudo ufw app list
+	echo -n "Do you want to allow Apache by default? [y/n]: "
+	read apache
+	if [[ "$apache" == "y" ]];
+	then
+		sudo ufw allow 'Apache'
+	fi
+fi
+
+clear
+
 echo -n "Do you want to change your shell? (Oh-my-zsh)[y/n]: "
 read res
-
 if [[ "$res" == "y" ]];
 then
 	# Installing fonts
@@ -22,7 +49,7 @@ then
 	fc-cache -f -v
 	
 	# Installing oh-my-zsh
-	sudo apt-get install zsh fzf
+	sudo apt-get install zsh fzf -y
 	rm -rf /home/$USER/.oh-my-zsh
 	wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh
 	chsh -s `which zsh`
@@ -70,15 +97,15 @@ fi
 
 if [[ "$medio_de_instalacion" == "1" ]];
 	then
-		sudo apt-get remove docker docker-engine docker.io containerd runc
-		sudo apt-get update && sudo apt update
-		sudo apt install apt-transport-https ca-certificates software-properties-common
+		sudo apt-get remove docker docker-engine docker.io containerd runc -y
+		sudo apt-get update y && sudo apt update -y
+		sudo apt install apt-transport-https ca-certificates software-properties-common -y
 		curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 		sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 		
-		sudo apt update
+		sudo apt update -y
 		apt-cache policy docker-ce
-		sudo apt install docker-ce
+		sudo apt install docker-ce -y
 
 		sudo usermod -aG docker ${USER}
 		su - ${USER}
@@ -95,11 +122,11 @@ else
 	fi
 	if [ $distro -eq "groovy" ];
 		then
-		wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/docker-scan-plugin_0.8.0~ubuntu-groovy_amd64.deb
-		wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/docker-ce_20.10.7~3-0~ubuntu-groovy_amd64.deb
-		wget https//download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/docker-ce-rootless-extras_20.10.7~3-0~ubuntu-groovy_amd64.deb
-		wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/docker-ce-cli_20.10.7~3-0~ubuntu-groovy_amd64.deb
-		wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/containerd.io_1.4.6-1_amd64.deb 
+			wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/docker-scan-plugin_0.8.0~ubuntu-groovy_amd64.deb
+			wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/docker-ce_20.10.7~3-0~ubuntu-groovy_amd64.deb
+			wget https//download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/docker-ce-rootless-extras_20.10.7~3-0~ubuntu-groovy_amd64.deb
+			wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/docker-ce-cli_20.10.7~3-0~ubuntu-groovy_amd64.deb
+			wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/containerd.io_1.4.6-1_amd64.deb 
 	fi
 	if [ $distro -eq "bionic" ]; 
 		then

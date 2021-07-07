@@ -27,13 +27,15 @@ echo "$environment"
 if [[ "$environment" == "1" ]];
 then
 	echo "Ubuntu (ES)"
-	exec ./environment/ubuntu.sh
+	exec ./environment/ubuntu_es.sh
 elif [[ "$environment" == "2" ]];
 then
 	echo "Ubuntu (EN)"
+	exec ./environment/ubuntu_en.sh
 elif [[ "$environment" == "3" ]];
 then
 	echo "Arch Linux"
+	exec ./environment/arch_linux.sh
 else
 	echo "Error"
 fi
