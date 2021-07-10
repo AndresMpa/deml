@@ -28,7 +28,11 @@ echo -n "¿Usaras stack (L)inux (A)pache (M)ySQL (P)HP? [y/n]: "
 read latop
 if [[ "$laptop" == "y" ]];
 then
-	sudo apt install apache2 mysql-server -y
+	sudo apt update
+	sudo apt install libapache2-mod-php apache2 mysql-server php php-cli php-mbstring -y
+	curl -sS https://getcomposer.org/installer -o composer-setup.php
+	echo "HASH=544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061" >> .bashrc
+	echo "HASH=544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061" >> .zshrc
 	sudo mysql_secure_installation
 	sudo ufw app list
 	echo -n "¿Usar Apache por defecto? [y/n]: "

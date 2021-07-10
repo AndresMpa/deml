@@ -1,13 +1,17 @@
+#!/bin/bash
+
 echo "Updating system" 
 sudo apt-get update -y
 echo "Installers"
 sudo apt-get install curl wget -y
-echo "Package managers"
+echo "Packages managers"
 sudo apt-get install nodejs pip npm -y
-echo "Support editor"
+echo "Support editors"
 sudo apt-get install neovim -y
-echo "Text editor"
+echo "Editor text"
 sudo snap install --classic code
+echo "Complements"
+sudo apt-get install openssh-server -y
 
 clear
  
@@ -24,10 +28,14 @@ echo -n "Don you want to use stack (L)inux (A)pache (M)ySQL (P)HP? [y/n]: "
 read latop
 if [[ "$laptop" == "y" ]];
 then
-	sudo apt install apache2 mysql-server -y
+	sudo apt update
+	sudo apt install libapache2-mod-php apache2 mysql-server php php-cli php-mbstring -y
+	curl -sS https://getcomposer.org/installer -o composer-setup.php
+	echo "HASH=544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061" >> .bashrc
+	echo "HASH=544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061" >> .zshrc
 	sudo mysql_secure_installation
 	sudo ufw app list
-	echo -n "Do you want to allow Apache by default? [y/n]: "
+	echo -n "¿Usar Apache por defecto? [y/n]: "
 	read apache
 	if [[ "$apache" == "y" ]];
 	then
