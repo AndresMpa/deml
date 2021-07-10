@@ -28,7 +28,16 @@ echo -n "¿Usaras stack (L)inux (A)pache (M)ySQL (P)HP? [y/n]: "
 read latop
 if [[ "$laptop" == "y" ]];
 then
-	sudo apt install apache2 mysql-server -y
+	# Actualizando el sistema
+	sudo apt update
+	# Instalando LAMP
+	sudo apt install libapache2-mod-php apache2 mysql-server php php-cli -y
+	# Descargando composer
+	curl -sS https://getcomposer.org/installer -o composer-setup.php
+	HASH=`curl -sS https://composer.github.io/installer.sig`
+	php -r "if (hash_file('SHA384', 'composer-setup.php') === '$HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+
+	# Instalando MySQL & Apache
 	sudo mysql_secure_installation
 	sudo ufw app list
 	echo -n "¿Usar Apache por defecto? [y/n]: "

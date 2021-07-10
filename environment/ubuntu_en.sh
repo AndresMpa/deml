@@ -1,13 +1,17 @@
+#!/bin/bash
+
 echo "Updating system" 
 sudo apt-get update -y
 echo "Installers"
 sudo apt-get install curl wget -y
-echo "Package managers"
+echo "Packages managers"
 sudo apt-get install nodejs pip npm -y
-echo "Support editor"
+echo "Support editors"
 sudo apt-get install neovim -y
-echo "Text editor"
+echo "Editor text"
 sudo snap install --classic code
+echo "Complements"
+sudo apt-get install openssh-server -y
 
 clear
  
@@ -24,10 +28,19 @@ echo -n "Don you want to use stack (L)inux (A)pache (M)ySQL (P)HP? [y/n]: "
 read latop
 if [[ "$laptop" == "y" ]];
 then
-	sudo apt install apache2 mysql-server -y
+	# Updating system
+	sudo apt update
+	# Installing LAMP
+	sudo apt install libapache2-mod-php apache2 mysql-server php php-cli -y
+	# Donwloading composer
+	curl -sS https://getcomposer.org/installer -o composer-setup.php
+	HASH=`curl -sS https://composer.github.io/installer.sig`
+	php -r "if (hash_file('SHA384', 'composer-setup.php') === '$HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+
+	# Installing MySQL & Apache
 	sudo mysql_secure_installation
 	sudo ufw app list
-	echo -n "Do you want to allow Apache by default? [y/n]: "
+	echo -n "Use deafult Apache? [y/n]: "
 	read apache
 	if [[ "$apache" == "y" ]];
 	then
