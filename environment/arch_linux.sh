@@ -1,11 +1,11 @@
 #!/bin/bash
 
 echo "Updating"
-sudo pacman -Syyu
+sudo pacman -Syyu --noconfirm
 echo "Installers"
-sudo pacman -S wget curl
+sudo pacman -S wget curl --noconfirm
 echo "Package managers"
-sudo pacman -S nodejs npm pip python 
+sudo pacman -S nodejs npm pip python --noconfirm
 
 echo -n "Do you want to install oh-my-zsh? [y/n]: "
 read zsh
@@ -19,7 +19,7 @@ then
 	fc-cache -f -v
 
 	# Installing oh-my-zsh
-	sudo pacman -S zsh fzf
+	sudo pacman -S zsh fzf neofetch --noconfirm
 	rm -rf /home/$USER/.oh-my-zsh
 	wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh
 	chsh -s `which zsh`

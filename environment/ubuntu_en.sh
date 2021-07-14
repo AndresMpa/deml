@@ -63,7 +63,7 @@ then
 	fc-cache -f -v
 	
 	# Installing oh-my-zsh
-	sudo apt-get install zsh fzf -y
+	sudo apt-get install zsh fzf neofetch -y
 	rm -rf /home/$USER/.oh-my-zsh
 	wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh
 	chsh -s `which zsh`
