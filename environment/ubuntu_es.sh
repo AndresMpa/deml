@@ -98,32 +98,31 @@ fi
 
 clear
 
-echo -n "¿Como quieres instalar docker?[y/n]"
+echo -n "¿Como quieres instalar docker? [y/n]: "
 read docker
 
 if [[ "$docker" == "y" ]];
-	then
-		echo "[1] Mediante repositorio de docker (Recomendado)"
-		echo "[2] Mediante deb packages "
-		read medio_de_instalacion
-fi
+then
+	echo "[1] Mediante repositorio de docker (Recomendado)"
+	echo "[2] Mediante deb packages "
+	read medio_de_instalacion
 
-if [[ "$medio_de_instalacion" == "1" ]];
+	if [[ "$medio_de_instalacion" == "1" ]];
 	then
 		sudo apt-get remove docker docker-engine docker.io containerd runc -y
 		sudo apt-get update -y && sudo apt update -y
 		sudo apt install apt-transport-https ca-certificates software-properties-common -y
 		curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 		sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-		
+			
 		sudo apt update -y
 		apt-cache policy docker-ce
 		sudo apt install docker-ce -y
-
+	
 		sudo usermod -aG docker ${USER}
 		su - ${USER}
-else
-	if [ $distro -eq "focal" ];
+	else
+		if [ $distro -eq "focal" ];
 		then
 			wget https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-scan-plugin_0.8.0~ubuntu-focal_amd64.deb
 			wget https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-ce_20.10.7~3-0~ubuntu-focal_amd64.deb
@@ -132,32 +131,40 @@ else
 			wget https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-ce-cli_20.10.7~3-0~ubuntu-focal_amd64.deb
 			wget https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-ce-cli_19.03.15~3-0~ubuntu-focal_amd64.deb
 			wget https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/containerd.io_1.4.6-1_amd64.deb
-	fi
-	if [ $distro -eq "groovy" ];
+		fi
+		if [ $distro -eq "groovy" ];
 		then
-		wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/docker-scan-plugin_0.8.0~ubuntu-groovy_amd64.deb
-		wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/docker-ce_20.10.7~3-0~ubuntu-groovy_amd64.deb
-		wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/docker-ce-rootless-extras_20.10.7~3-0~ubuntu-groovy_amd64.deb
-		wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/docker-ce-cli_20.10.7~3-0~ubuntu-groovy_amd64.deb
-		wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/containerd.io_1.4.6-1_amd64.deb 
-	fi
-	if [ $distro -eq "bionic" ]; 
+			wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/docker-scan-plugin_0.8.0~ubuntu-groovy_amd64.deb
+			wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/docker-ce_20.10.7~3-0~ubuntu-groovy_amd64.deb
+			wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/docker-ce-rootless-extras_20.10.7~3-0~ubuntu-groovy_amd64.deb
+			wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/docker-ce-cli_20.10.7~3-0~ubuntu-groovy_amd64.deb
+			wget https://download.docker.com/linux/ubuntu/dists/groovy/pool/stable/amd64/containerd.io_1.4.6-1_amd64.deb 
+		fi
+		if [ $distro -eq "bionic" ]; 
 		then
 			wget https://download.docker.com/linux/ubuntu/dists/bionic/pool/stable/amd64/containerd.io_1.4.6-1_amd64.deb
 			wget https://download.docker.com/linux/ubuntu/dists/bionic/pool/stable/amd64/docker-ce-cli_20.10.7~3-0~ubuntu-bionic_amd64.deb
 			wget https://download.docker.com/linux/ubuntu/dists/bionic/pool/stable/amd64/docker-ce-rootless-extras_20.10.7~3-0~ubuntu-bionic_amd64.deb
 			wget https://download.docker.com/linux/ubuntu/dists/bionic/pool/stable/amd64/docker-ce_20.10.7~3-0~ubuntu-bionic_amd64.deb
 			wget https://download.docker.com/linux/ubuntu/dists/bionic/pool/stable/amd64/docker-scan-plugin_0.8.0~ubuntu-bionic_amd64.deb
+		fi
+		sudo dpkg -i *.deb
 	fi
-	sudo dpkg -i *.deb
+	
+	# Creando grupo docker
+	sudo groupadd docker
+	sudo usermod -aG docker $USER
+	newgrp docker
+		
+	# Iniciando servicio
+	sudo systemctl enable docker.service
+	sudo systemctl enable containerd.service
 fi
 
-# Creando grupo docker
-sudo groupadd docker
-sudo usermod -aG docker $USER
-newgrp docker
+echo -n "Gracias por usar DESL, es necesario reiniciar el equipo, deseas hacerlo ahora [s/n]"
+read rebootNow
 
-# Iniciando servicio
-sudo systemctl enable docker.service
-sudo systemctl enable containerd.service
-
+if [[ $rebootNow == "s" ]];
+then
+	sudo reboot now
+fi
