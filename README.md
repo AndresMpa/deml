@@ -13,9 +13,11 @@ involved in unix
 This is quite simple to use, just run the
 following commands:
 
-`$ git clone https://github.com/AndresMpa/desl.git`
-`$ cd desl `
-`$ source ./install.sh`
+```
+$ git clone https://github.com/AndresMpa/desl.git
+$ cd desl
+$ source ./install.sh
+```
 
 ## Example
 
