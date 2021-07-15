@@ -4,8 +4,8 @@ echo "Actualizando el sistema"
 sudo apt-get update -y
 echo "Instaladores"
 sudo apt-get install curl wget -y
-echo "Manejadores de paquetes"
-sudo apt-get install nodejs pip npm -y
+echo "Manejadores de paquetes, lenguajes y ambientes"
+sudo apt-get install python-virtualenv python3-venv nodejs pip npm -y
 echo "Editor para soporte"
 sudo apt-get install neovim -y
 echo "Editor de texto"
