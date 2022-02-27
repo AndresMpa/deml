@@ -1,7 +1,7 @@
 # DESL
 
-The Developer Environments Setter for Linux
-(DESL) is a feature developet for developers
+The Developer Environments Maker for Linux
+(DEML) is a feature developet for developers
 to create Linux terminal develop environmets,
 this is easy to use and useful to get a full
 functiona terminal, with all the things you
