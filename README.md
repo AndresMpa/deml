@@ -1,4 +1,4 @@
-# DESL
+# DEML
 
 The Developer Environments Maker for Linux
 (DEML) is a feature developet for developers
