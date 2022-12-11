@@ -21,7 +21,7 @@ then
 	# Installing oh-my-zsh
 	sudo pacman -S zsh fzf neofetch --noconfirm
 	rm -rf /home/$USER/.oh-my-zsh
-	wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh
+	sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 	chsh -s `which zsh`
 
 	# Adding zsh default configuration
